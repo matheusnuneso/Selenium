@@ -38,4 +38,8 @@ public class LoginPage {
     public void clickOnLoginButton(){
         browser.findElement(By.id("login-button")).click();
     }
+
+    public String getErrorMsg(){
+        return browser.findElement(By.className("error-message-container")).getText();
+    }
 }

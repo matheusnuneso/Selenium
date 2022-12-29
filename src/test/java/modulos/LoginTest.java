@@ -13,7 +13,7 @@ public class LoginTest {
     WebDriver browser = new ChromeDriver();
 
     @BeforeEach
-    public void testTest(){
+    public void beforeEach(){
         System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver108\\chromedriver.exe");
 
         browser.manage().window().maximize();
@@ -26,10 +26,54 @@ public class LoginTest {
     public void loginSuccess(){
         String title =
                 new LoginPage(browser)
-                .submitLoginSuccess(GlobalVariables.standard_user, GlobalVariables.secret_sauce)
+                .submitLoginSuccess(GlobalVariables.standard_user, GlobalVariables.password)
                 .existsHeader();
 
         Assertions.assertEquals("PRODUCTS", title);
+    }
+
+    @Test
+    @DisplayName("Login with locked out user")
+    public void loginLockedOutUser(){
+        String msgError =
+                new LoginPage(browser)
+                .submitLoginFailure(GlobalVariables.locked_out_user, GlobalVariables.password)
+                .getErrorMsg();
+
+        Assertions.assertEquals("Epic sadface: Sorry, this user has been locked out.", msgError);
+    }
+
+    @Test
+    @DisplayName("Login no insert username")
+    public void loginNoUsername(){
+        String msgError =
+                new LoginPage(browser)
+                .submitLoginFailure("", "123456")
+                .getErrorMsg();
+
+        Assertions.assertEquals("Epic sadface: Username is required", msgError);
+    }
+
+    @Test
+    @DisplayName("Login no insert password")
+    public void loginNoPassword(){
+        String msgError =
+                new LoginPage(browser)
+                .submitLoginFailure(GlobalVariables.standard_user, "")
+                .getErrorMsg();
+
+        Assertions.assertEquals("Epic sadface: Password is required", msgError);
+    }
+
+    @Test
+    @DisplayName("Login with incorrect data")
+    public void loginWithIncorrectData(){
+        String msgError =
+                new LoginPage(browser)
+                .submitLoginFailure("Incorrect-User", "Incorrect-Password")
+                .getErrorMsg();
+
+        Assertions.assertEquals("Epic sadface: Username and password do not match any user in this service", msgError);
     }
 
     @AfterEach
