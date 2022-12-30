@@ -14,11 +14,11 @@ public class LoginTest {
 
     @BeforeEach
     public void beforeEach(){
-        System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver108\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", GlobalVariables.path_chrome_driver);
 
         browser.manage().window().maximize();
         browser.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        browser.get("https://www.saucedemo.com/");
+        browser.get(GlobalVariables.base_url);
     }
 
     @Test
