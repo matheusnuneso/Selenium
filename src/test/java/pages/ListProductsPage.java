@@ -36,4 +36,14 @@ public class ListProductsPage {
     public String getNameFirstProduct(){
         return browser.findElement(By.className(titleClass)).getText();
     }
+
+    public ListProductsPage addProductInCart(Integer index){
+        browser.findElements(By.className("btn_inventory")).get(index).click();
+        return this;
+    }
+
+    public Integer getQuantityProductCart(){
+       String quant = browser.findElement(By.className("shopping_cart_badge")).getText();
+       return Integer.valueOf(quant);
+    }
 }

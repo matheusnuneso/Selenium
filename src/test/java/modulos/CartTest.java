@@ -1,8 +1,9 @@
 package modulos;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pages.ListProductsPage;
 import pages.LoginPage;
 import utility.GlobalVariables;
 
@@ -22,6 +23,34 @@ public class CartTest {
 
         new LoginPage(browser)
                 .submitLoginSuccess(GlobalVariables.standard_user, GlobalVariables.password);
+    }
+
+    @Test
+    @DisplayName("Add a product in Cart")
+    public void addAProductInCart(){
+        ListProductsPage productsPage = new ListProductsPage(browser);
+
+        productsPage.addProductInCart(1);
+        Integer quant = productsPage.getQuantityProductCart();
+
+        Assertions.assertEquals(1, quant);
+    }
+
+    @Test
+    @DisplayName("Add two products in Cart")
+    public void addTwoProductsInCart(){
+        ListProductsPage productsPage = new ListProductsPage(browser);
+
+        productsPage.addProductInCart(1);
+        productsPage.addProductInCart(2);
+        Integer quant = productsPage.getQuantityProductCart();
+
+        Assertions.assertEquals(2, quant);
+    }
+
+    @AfterEach
+    public void afterEach(){
+        browser.quit();
     }
 
 }
