@@ -8,6 +8,8 @@ public class ListProductsPage {
 
     private WebDriver browser;
 
+    private String titleClass = "inventory_item_name";
+
     public ListProductsPage(WebDriver browser) {
         this.browser = browser;
     }
@@ -24,5 +26,14 @@ public class ListProductsPage {
     public String getPriceElementByIndex(Integer index){
         String xpath = "(//div[@class='inventory_item_price'])["+ index +"]";
         return browser.findElement(By.xpath(xpath)).getText();
+    }
+
+    public ProductPage clickFirstProduct(){
+        browser.findElement(By.className(titleClass)).click();
+        return new ProductPage(browser);
+    }
+
+    public String getNameFirstProduct(){
+        return browser.findElement(By.className(titleClass)).getText();
     }
 }

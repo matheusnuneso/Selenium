@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.ListProductsPage;
 import pages.LoginPage;
+import pages.ProductPage;
 import utility.GlobalVariables;
 
 import java.time.Duration;
@@ -53,7 +54,22 @@ public class ProductTest {
         Assertions.assertTrue(lowPrice < highPrice);
     }
 
+    @Test
+    @DisplayName("Click in a product")
+    public void clickInAProduct(){
+        ListProductsPage productsPage = new ListProductsPage(browser);
+
+        String nameInListProductPage = productsPage.getNameFirstProduct();
+        productsPage.clickFirstProduct();
+
+        String nameInProductPage = new ProductPage(browser).getNameProduct();
+
+        Assertions.assertEquals(nameInListProductPage, nameInProductPage);
+    }
+
     @AfterEach
-    public void afterEach(){ browser.quit(); }
+    public void afterEach(){
+        browser.quit();
+    }
 
 }
