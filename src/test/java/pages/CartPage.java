@@ -14,4 +14,8 @@ public class CartPage {
     public void removeProduct(Integer index){
         browser.findElements(By.className("cart_button")).get(index).click();
     }
+
+    public void clickCheckoutButton(){
+        browser.findElement(By.className("checkout_button")).click();
+    }
 }
