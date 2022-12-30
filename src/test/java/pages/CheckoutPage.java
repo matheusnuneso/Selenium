@@ -39,4 +39,8 @@ public class CheckoutPage {
     public String getTextSuccess(){
         return browser.findElement(By.className("complete-header")).getText();
     }
+
+    public String getErrorMsg(){
+        return browser.findElement(By.className("error-message-container")).getText();
+    }
 }
