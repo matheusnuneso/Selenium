@@ -6,9 +6,9 @@ import org.openqa.selenium.support.ui.Select;
 
 public class ListProductsPage {
 
-    private WebDriver browser;
+    private final WebDriver browser;
 
-    private String titleClass = "inventory_item_name";
+    private final String titleClass = "inventory_item_name";
 
     public ListProductsPage(WebDriver browser) {
         this.browser = browser;
@@ -37,7 +37,7 @@ public class ListProductsPage {
         return browser.findElement(By.className(titleClass)).getText();
     }
 
-    public ListProductsPage addProductInCart(Integer index){
+    public ListProductsPage addRemoveProductInCart(Integer index){
         browser.findElements(By.className("btn_inventory")).get(index).click();
         return this;
     }
@@ -45,5 +45,10 @@ public class ListProductsPage {
     public Integer getQuantityProductCart(){
        String quant = browser.findElement(By.className("shopping_cart_badge")).getText();
        return Integer.valueOf(quant);
+    }
+
+    public CartPage clickCartButton(){
+        browser.findElement(By.className("shopping_cart_link")).click();
+        return new CartPage(browser);
     }
 }

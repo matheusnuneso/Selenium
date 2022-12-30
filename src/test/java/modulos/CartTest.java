@@ -3,6 +3,7 @@ package modulos;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pages.CartPage;
 import pages.ListProductsPage;
 import pages.LoginPage;
 import utility.GlobalVariables;
@@ -30,7 +31,7 @@ public class CartTest {
     public void addAProductInCart(){
         ListProductsPage productsPage = new ListProductsPage(browser);
 
-        productsPage.addProductInCart(1);
+        productsPage.addRemoveProductInCart(1);
         Integer quant = productsPage.getQuantityProductCart();
 
         Assertions.assertEquals(1, quant);
@@ -41,11 +42,41 @@ public class CartTest {
     public void addTwoProductsInCart(){
         ListProductsPage productsPage = new ListProductsPage(browser);
 
-        productsPage.addProductInCart(1);
-        productsPage.addProductInCart(2);
+        productsPage.addRemoveProductInCart(1);
+        productsPage.addRemoveProductInCart(2);
         Integer quant = productsPage.getQuantityProductCart();
 
         Assertions.assertEquals(2, quant);
+    }
+
+    @Test
+    @DisplayName("Remove a product of cart in list product page")
+    public void removeProductOfCart(){
+        ListProductsPage productsPage = new ListProductsPage(browser);
+
+        productsPage.addRemoveProductInCart(1);
+        productsPage.addRemoveProductInCart(2);
+
+        Integer quantBeforeRemove = productsPage.getQuantityProductCart();
+        productsPage.addRemoveProductInCart(1);
+        Integer quantAfterRemove = productsPage.getQuantityProductCart();
+
+        Assertions.assertTrue(quantAfterRemove < quantBeforeRemove);
+    }
+
+    @Test
+    @DisplayName("Remove a product of cart in cart page")
+    public void removeProductOfCart2(){
+        ListProductsPage productsPage = new ListProductsPage(browser);
+
+        productsPage.addRemoveProductInCart(1);
+        productsPage.addRemoveProductInCart(2);
+
+        Integer quantBeforeRemove = productsPage.getQuantityProductCart();
+        productsPage.clickCartButton().removeProduct(1);
+        Integer quantAfterRemove = productsPage.getQuantityProductCart();
+
+        Assertions.assertTrue(quantAfterRemove < quantBeforeRemove);
     }
 
     @AfterEach
