@@ -64,7 +64,7 @@ public class ProductTest {
         WebElement webElement =
                 new ProductPage(browser)
                 .clickInAFilter("Women")
-                .clickInFirstProduct()
+                .clickInAProduct(0)
                 .getElementToAddCart();
 
         Assertions.assertTrue(webElement.isDisplayed());

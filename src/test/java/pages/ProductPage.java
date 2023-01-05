@@ -31,8 +31,8 @@ public class ProductPage {
         return browser.findElement(By.className("category-name")).getText();
     }
 
-    public ProductPage clickInFirstProduct(){
-        browser.findElement(By.cssSelector(".product-container .product-name")).click();
+    public ProductPage clickInAProduct(int index){
+        browser.findElements(By.cssSelector(".product-container .product-name")).get(index).click();
         return this;
     }
 
@@ -42,5 +42,13 @@ public class ProductPage {
 
     public String getErrorMsg(){
         return browser.findElement(By.className("alert-warning")).getText();
+    }
+
+    public ProductPage addAProductInCart(int index){
+        this.clickInAProduct(index);
+        browser.findElement(By.name("Submit")).click();
+        browser.findElement(By.className("continue")).click();
+        browser.findElement(By.xpath("//span[@class='navigation_page']//a")).click();
+        return this;
     }
 }
