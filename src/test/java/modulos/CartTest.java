@@ -55,7 +55,7 @@ public class CartTest {
 
     @AfterEach
     public void afterEach(){
-        //browser.quit();
+        browser.quit();
     }
 
 }
